@@ -1,5 +1,8 @@
 ﻿#include <iostream>
+#include <math.h>
 using namespace std;
+
+//#define STRUCT_POINT
 
 class Point
 {
@@ -60,15 +63,27 @@ public:
 	}
 	~Point()
 	{
-		cout << "Destructor: \t" << this << endl;
+		//cout << "Destructor: \t" << this << endl;
 	}
 	//Method
 	void print()const
 	{
 		cout << "X = " << x << "\tY = " << y << "\tZ = " << z << endl;
 	}
+	//Метод для нахождения дистанции до точки
+	double distance()const
+	{
+		return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+	}
 };
-//#define STRUCT_POINT
+
+
+//Функция нахождения дистанции между двумя точками
+double distanceTo(Point Point1, Point Point2)
+{
+	return sqrt(pow(Point1.get_x() - Point2.get_x(), 2) + pow(Point1.get_y() - Point2.get_y(), 2) + pow(Point1.get_z() - Point2.get_z(), 2));
+}
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -85,7 +100,7 @@ void main()
 	Point* pA = &A;
 	cout << pA->x << "\t" << pA->y << endl;
 #endif // STRUCT_POINT
-	Point A;
+	Point A(1, 0);
 	//A.set_x(2);
 	//A.set_y(3);
 	//A.set_z(5);
@@ -94,4 +109,6 @@ void main()
 	B.print();
 	Point C(1, 2, 3);
 	C.print();
+	cout << "Дистанция до точки: " << A.distance() << endl;
+	cout << "Дистанция между точками: " << distanceTo(A, C) << endl;
 }
