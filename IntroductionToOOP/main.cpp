@@ -77,7 +77,6 @@ public:
 	}
 };
 
-
 //Функция нахождения дистанции между двумя точками
 double distance(Point Point1, Point Point2)
 {
