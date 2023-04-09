@@ -79,7 +79,7 @@ public:
 
 
 //Функция нахождения дистанции между двумя точками
-double distanceTo(Point Point1, Point Point2)
+double distance(Point Point1, Point Point2)
 {
 	return sqrt(pow(Point1.get_x() - Point2.get_x(), 2) + pow(Point1.get_y() - Point2.get_y(), 2) + pow(Point1.get_z() - Point2.get_z(), 2));
 }
@@ -110,5 +110,5 @@ void main()
 	Point C(1, 2, 3);
 	C.print();
 	cout << "Дистанция до точки: " << A.distance() << endl;
-	cout << "Дистанция между точками: " << distanceTo(A, C) << endl;
+	cout << "Дистанция между точками: " << distance(A, C) << endl;
 }
