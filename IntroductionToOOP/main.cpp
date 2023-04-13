@@ -70,10 +70,20 @@ public:
 	{
 		cout << "X = " << x << "\tY = " << y << "\tZ = " << z << endl;
 	}
-	//Метод для нахождения дистанции до точки
-	double distance()const
+	//Метод для нахождения дистанции от 0 до точки
+	double distanceFromZero()const
 	{
 		return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+	}
+	//Метод для нахождения дистанции до указанной точки
+	double distance(Point name)const
+	{
+		return sqrt(pow(x - name.x, 2) + pow(y - name.y, 2) + pow(z - name.z, 2));
+	}
+	//Перегруженный метод для указания точки с помощью координат
+	double distance(double x = 0, double y = 0, double z = 0)const
+	{
+		return sqrt(pow(this->x - x, 2) + pow(this->y - y, 2) + pow(this->z - z, 2));
 	}
 };
 
@@ -99,15 +109,16 @@ void main()
 	Point* pA = &A;
 	cout << pA->x << "\t" << pA->y << endl;
 #endif // STRUCT_POINT
-	Point A(1, 0);
+	Point A(1, 0, 2);
 	//A.set_x(2);
 	//A.set_y(3);
 	//A.set_z(5);
 	A.print();
-	Point B(5, 0);
+	Point B(5, 0, 1);
 	B.print();
 	Point C(1, 2, 3);
 	C.print();
-	cout << "Дистанция до точки: " << A.distance() << endl;
+	cout << "Дистанция до точки: " << A.distance(B) << endl;
+	cout << "Дистанция от точки до указанных координат: " << A.distance() << endl;
 	cout << "Дистанция между точками: " << distance(A, C) << endl;
 }
