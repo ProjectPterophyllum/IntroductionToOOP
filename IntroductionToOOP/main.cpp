@@ -72,7 +72,7 @@ public:
 		this->x = other.x;
 		this->y = other.y;
 		this->z = other.z;
-		cout << "CopyConstructor: " << this << endl;
+		cout << "CopyConstructor: \t " << this << endl;
 	}
 	//Destructor
 	~Point()
