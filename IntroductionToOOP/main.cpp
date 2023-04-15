@@ -1,14 +1,16 @@
 ﻿#include <iostream>
 #include <math.h>
 using namespace std;
-
 using std::cin;
 using std::cout;
 using std::endl;
+
 //#define STRUCT_POINT
-#define constructors_check
+//#define constructors_check
 //#define distance_check
+//#define assignment_check
 #define delimiter "\n------------------------------------------\n"
+
 class Point
 {
 	double x;
@@ -80,12 +82,13 @@ public:
 		cout << "Destructor: \t\t" << this << endl;
 	}
 	//Operators
-	void operator=(const Point& other)
+	Point& operator=(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
 		this->z = other.z;
 		cout << "CopyAssignment: \t" << this << endl;
+		return *this;
 	}
 	//Method
 	void print()const
@@ -98,7 +101,7 @@ public:
 		return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 	}
 	//Метод для нахождения дистанции до указанной точки
-	double distance(const Point &name)const
+	double distance(const Point& name)const
 	{
 		return sqrt(pow(x - name.x, 2) + pow(y - name.y, 2) + pow(z - name.z, 2));
 	}
@@ -110,7 +113,7 @@ public:
 };
 
 //Функция нахождения дистанции между двумя точками
-double distance(const Point &Point1, const Point &Point2)
+double distance(const Point& Point1, const Point& Point2)
 {
 	return sqrt(pow(Point1.get_x() - Point2.get_x(), 2) + pow(Point1.get_y() - Point2.get_y(), 2) + pow(Point1.get_z() - Point2.get_z(), 2));
 }
@@ -118,6 +121,7 @@ double distance(const Point &Point1, const Point &Point2)
 void main()
 {
 	setlocale(LC_ALL, "");
+
 #ifdef STRUCT_POINT
 
 
@@ -135,7 +139,6 @@ void main()
 	A.set_z(5);
 #endif // STRUCT_POINT
 
-
 #ifdef distance_check
 	Point A(2, 3);
 	A.print();
@@ -151,7 +154,6 @@ void main()
 	cout << delimiter << endl;
 #endif // distance_check
 
-
 #ifdef constructors_check
 	Point A;//default constr
 	A.print();
@@ -166,5 +168,17 @@ void main()
 	E.print();
 #endif // constructors_check
 
+#ifdef assignment_check
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << "\t" << endl;
+	Point A, B, C;
+	cout << delimiter << endl;
+	A = B = C = Point(1, 2, 3);
+	cout << delimiter << endl;
+	A.print();
+	B.print();
+	C.print();
+#endif // assignment_check
 
 }
