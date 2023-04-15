@@ -72,12 +72,20 @@ public:
 		this->x = other.x;
 		this->y = other.y;
 		this->z = other.z;
-		cout << "CopyConstructor: \t " << this << endl;
+		cout << "CopyConstructor:\t" << this << endl;
 	}
 	//Destructor
 	~Point()
 	{
-		cout << "Destructor: \t" << this << endl;
+		cout << "Destructor: \t\t" << this << endl;
+	}
+	//Operators
+	void operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		this->z = other.z;
+		cout << "CopyAssignment: \t" << this << endl;
 	}
 	//Method
 	void print()const
@@ -126,6 +134,8 @@ void main()
 	A.set_y(3);
 	A.set_z(5);
 #endif // STRUCT_POINT
+
+
 #ifdef distance_check
 	Point A(2, 3);
 	A.print();
@@ -140,6 +150,8 @@ void main()
 	cout << "Дистанция между точками (c помощью функции): " << distance(A, B) << endl;
 	cout << delimiter << endl;
 #endif // distance_check
+
+
 #ifdef constructors_check
 	Point A;//default constr
 	A.print();
@@ -149,5 +161,10 @@ void main()
 	C.print();
 	Point D = C;//copy constr
 	D.print();
+	Point E;
+	E = D; //copy assignment(оператор присваивания)
+	E.print();
 #endif // constructors_check
+
+
 }
