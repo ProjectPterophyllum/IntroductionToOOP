@@ -90,7 +90,7 @@ public:
 		return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 	}
 	//Метод для нахождения дистанции до указанной точки
-	double distance(Point name)
+	double distance(const Point &name)const
 	{
 		return sqrt(pow(x - name.x, 2) + pow(y - name.y, 2) + pow(z - name.z, 2));
 	}
@@ -102,7 +102,7 @@ public:
 };
 
 //Функция нахождения дистанции между двумя точками
-double distance(Point Point1, Point Point2)
+double distance(const Point &Point1, const Point &Point2)
 {
 	return sqrt(pow(Point1.get_x() - Point2.get_x(), 2) + pow(Point1.get_y() - Point2.get_y(), 2) + pow(Point1.get_z() - Point2.get_z(), 2));
 }
@@ -150,5 +150,4 @@ void main()
 	Point D = C;//copy constr
 	D.print();
 #endif // constructors_check
-
 }
