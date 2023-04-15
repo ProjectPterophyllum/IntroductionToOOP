@@ -2,8 +2,13 @@
 #include <math.h>
 using namespace std;
 
+using std::cin;
+using std::cout;
+using std::endl;
 //#define STRUCT_POINT
-
+//#define constructors_check
+#define distance_check
+#define delimiter "\n------------------------------------------\n"
 class Point
 {
 	double x;
@@ -61,9 +66,18 @@ public:
 		this->z = z;
 		cout << "3ArgContructor: " << endl;
 	}
+	//CopyConstr
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		this->z = other.z;
+		cout << "CopyConstructor: " << this << endl;
+	}
+	//Destructor
 	~Point()
 	{
-		//cout << "Destructor: \t" << this << endl;
+		cout << "Destructor: \t" << this << endl;
 	}
 	//Method
 	void print()const
@@ -76,12 +90,12 @@ public:
 		return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 	}
 	//Метод для нахождения дистанции до указанной точки
-	double distance(Point name)const
+	double distance(Point name)
 	{
 		return sqrt(pow(x - name.x, 2) + pow(y - name.y, 2) + pow(z - name.z, 2));
 	}
 	//Перегруженный метод для указания точки с помощью координат
-	double distance(double x = 0, double y = 0, double z = 0)const
+	double distance(double x = 0, double y = 0, double z = 0)
 	{
 		return sqrt(pow(this->x - x, 2) + pow(this->y - y, 2) + pow(this->z - z, 2));
 	}
@@ -108,17 +122,33 @@ void main()
 	cout << sizeof(A) << endl;
 	Point* pA = &A;
 	cout << pA->x << "\t" << pA->y << endl;
+	A.set_x(2);
+	A.set_y(3);
+	A.set_z(5);
 #endif // STRUCT_POINT
-	Point A(1, 0, 2);
-	//A.set_x(2);
-	//A.set_y(3);
-	//A.set_z(5);
+#ifdef distance_check
+	Point A(2, 3);
 	A.print();
-	Point B(5, 0, 1);
+	cout << delimiter << endl;
+	Point B(7, 8);
 	B.print();
-	Point C(1, 2, 3);
-	C.print();
-	cout << "Дистанция до точки: " << A.distance(B) << endl;
+	cout << delimiter << endl;
+	cout << "Дистанция до точки (метод): " << A.distance(B) << endl;
+	cout << delimiter << endl;
 	cout << "Дистанция от точки до указанных координат: " << A.distance() << endl;
-	cout << "Дистанция между точками: " << distance(A, C) << endl;
+	cout << delimiter << endl;
+	cout << "Дистанция между точками (c помощью функции): " << distance(A, B) << endl;
+	cout << delimiter << endl;
+#endif // distance_check
+#ifdef constructors_check
+	Point A;//default constr
+	A.print();
+	Point B(5, 3);//two arg constr
+	B.print();
+	Point C(1, 2, 3);//three arg constr
+	C.print();
+	Point D = C;//copy constr
+	D.print();
+#endif // constructors_check
+
 }
