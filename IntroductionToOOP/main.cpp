@@ -6,8 +6,8 @@ using std::cin;
 using std::cout;
 using std::endl;
 //#define STRUCT_POINT
-//#define constructors_check
-#define distance_check
+#define constructors_check
+//#define distance_check
 #define delimiter "\n------------------------------------------\n"
 class Point
 {
