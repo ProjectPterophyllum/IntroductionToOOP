@@ -87,38 +87,6 @@ public:
 			cout << numerator << "/" << denumerator;
 		cout << endl;
 	}
-#endif // DEBUG
-	//Упрощение дроби
-	void simplify()
-	{
-		int gcd = calculateGCD(numerator, denumerator);
-		numerator /= gcd;
-		denumerator /= gcd;
-	}
-	//Преобразование из неправильной в смешаную
-	void conversion()
-	{
-		if (!properFraction())
-		{
-			integer += numerator / denumerator;
-			numerator = numerator % denumerator;
-		}
-	}
-	//Из смешаной в неправильную
-	void reverseconversion()
-	{
-		if (integer > 0)
-		{
-			numerator += integer * denumerator;
-			integer = 0;
-		}
-	}
-	//В десятичную
-	double todecimal()
-	{
-		return (double)integer + ((double)numerator / (double)denumerator);
-	}
-#ifdef DEBUG
 	//Может сказать какая это дробь.
 	string whichFraction() const
 	{
@@ -131,6 +99,37 @@ public:
 			return result = "Дробь неправильная";
 	}
 #endif // DEBUG
+	//Упрощение дроби
+	void simplify()
+	{
+		int gcd = calculateGCD(numerator, denumerator);
+		numerator /= gcd;
+		denumerator /= gcd;
+	}
+	//Conversion Methods:
+	//Преобразование из неправильной в смешаную
+	void toMixed()
+	{
+		if (!properFraction())
+		{
+			integer += numerator / denumerator;
+			numerator = numerator % denumerator;
+		}
+	}
+	//Из смешаной в неправильную
+	void toImproper()
+	{
+		if (integer > 0)
+		{
+			numerator += integer * denumerator;
+			integer = 0;
+		}
+	}
+	//В десятичную
+	double todecimal()
+	{
+		return (double)integer + ((double)numerator / (double)denumerator);
+	}
 
 	//              Operators
 	//Оператор +
@@ -146,7 +145,7 @@ public:
 			this->numerator += other.numerator;
 		this->integer += other.integer;
 		simplify();
-		conversion();
+		toMixed();
 		return *this;
 	}
 	//Оператор -
@@ -162,7 +161,7 @@ public:
 			this->numerator -= other.numerator;
 		this->integer -= other.integer;
 		simplify();
-		conversion();
+		toMixed();
 		return *this;
 	}
 	//Оператор *
@@ -171,7 +170,7 @@ public:
 		this->numerator = (this->numerator + this->integer * this->denumerator) * (other.numerator + other.integer * other.denumerator);
 		this->denumerator = this->denumerator * other.denumerator;
 		simplify();
-		conversion();
+		toMixed();
 		return *this;
 	}
 	//Оператор /
@@ -180,7 +179,7 @@ public:
 		this->numerator = (this->numerator + this->integer * this->denumerator) * other.denumerator;
 		this->denumerator = this->denumerator * (other.numerator + other.integer * other.denumerator);
 		simplify();
-		conversion();
+		toMixed();
 		return *this;
 	}
 	//In-out
