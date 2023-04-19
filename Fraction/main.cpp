@@ -113,6 +113,10 @@ public:
 			integer = 0;
 		}
 	}
+	double todecimal()
+	{
+		return (double)integer + ((double)numerator / (double)denumerator);
+	}
 #ifdef DEBUG
 	//Может сказать какая это дробь.
 	string whichFraction() const
@@ -223,5 +227,6 @@ void main()
 	A = A / B;
 	cout << A << endl;
 	cin >> C;
-	cout << C;
+	cout << C << endl;
+	cout << C.todecimal();
 }
