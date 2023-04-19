@@ -6,11 +6,12 @@ using namespace std;
 class Fraction
 {
 private:
-	int integer;//Целая часть дроби
-	int numerator;//Числитель дроби
-	int denumerator;//Знаменатель дроби
+	int integer; //Целая часть дроби
+	int numerator; //Числитель дроби
+	int denumerator; //Знаменатель дроби
 public:
-	//            get-set методы
+
+	//             get-set методы
 	int get_int()const
 	{
 		return integer;
@@ -35,7 +36,8 @@ public:
 	{
 		denumerator != 0 ? this->denumerator = denumerator : this->denumerator = 1;
 	}
-	//             Constructor
+
+	//              Constructor
 	Fraction()
 	{
 		integer = 0;
@@ -77,7 +79,8 @@ public:
 		cout << "Destructor: \t" << this << endl;
 #endif // DEBUG
 	}
-	//             Method:
+
+	//              Method:
 #ifdef DEBUG
 	void Print() const
 	{
@@ -99,15 +102,15 @@ public:
 			return result = "Дробь неправильная";
 	}
 #endif // DEBUG
-	//Упрощение дроби
+		//Упрощение дроби
 	void simplify()
 	{
 		int gcd = calculateGCD(numerator, denumerator);
 		numerator /= gcd;
 		denumerator /= gcd;
 	}
-	//Conversion Methods:
-	//Преобразование из неправильной в смешаную
+	//              Conversion Methods:
+		//Преобразование из неправильной в смешаную
 	void toMixed()
 	{
 		if (!properFraction())
@@ -116,7 +119,7 @@ public:
 			numerator = numerator % denumerator;
 		}
 	}
-	//Из смешаной в неправильную
+		//Из смешаной в неправильную
 	void toImproper()
 	{
 		if (integer > 0)
@@ -125,14 +128,14 @@ public:
 			integer = 0;
 		}
 	}
-	//В десятичную
+		//В десятичную
 	double todecimal()
 	{
 		return (double)integer + ((double)numerator / (double)denumerator);
 	}
 
-	//              Operators
-	//Оператор +
+	//              Operators:
+		//Оператор +
 	Fraction& operator+(const Fraction& other)
 	{
 		if (this->denumerator != other.denumerator)
@@ -148,7 +151,7 @@ public:
 		toMixed();
 		return *this;
 	}
-	//Оператор -
+		//Оператор -
 	Fraction& operator-(const Fraction& other)
 	{
 		if (this->denumerator != other.denumerator)
@@ -164,7 +167,7 @@ public:
 		toMixed();
 		return *this;
 	}
-	//Оператор *
+		//Оператор *
 	Fraction& operator*(const Fraction& other)
 	{
 		this->numerator = (this->numerator + this->integer * this->denumerator) * (other.numerator + other.integer * other.denumerator);
@@ -173,7 +176,7 @@ public:
 		toMixed();
 		return *this;
 	}
-	//Оператор /
+		//Оператор /
 	Fraction& operator/(const Fraction& other)
 	{
 		this->numerator = (this->numerator + this->integer * this->denumerator) * other.denumerator;
@@ -182,7 +185,8 @@ public:
 		toMixed();
 		return *this;
 	}
-	//In-out
+
+	//				In-out
 	friend istream& operator>>(istream& in, Fraction& name)
 	{
 		char slash = '/';
@@ -199,19 +203,19 @@ public:
 		return out;
 	}
 private:
-	//Проверяет правильная дробь или неправильная
+		//Проверяет правильная дробь или неправильная
 	bool properFraction()const
 	{
 		return numerator < denumerator ? true : false;
 	}
-	//НОД
+		//НОД
 	int calculateGCD(const int num, const int denum)const {
 		if (denum == 0) {
 			return num;
 		}
 		return calculateGCD(denum, num % denum);
 	}
-	//НОК
+		//НОК
 	int calculateLCM(const int num, const int denum)const
 	{
 		int gcd = calculateGCD(num, denum);
