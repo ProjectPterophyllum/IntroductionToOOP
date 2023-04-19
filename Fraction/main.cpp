@@ -113,6 +113,7 @@ public:
 			integer = 0;
 		}
 	}
+	//В десятичную
 	double todecimal()
 	{
 		return (double)integer + ((double)numerator / (double)denumerator);
