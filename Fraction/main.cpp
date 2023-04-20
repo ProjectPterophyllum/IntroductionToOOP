@@ -135,8 +135,8 @@ public:
 	}
 
 	//              Operators:
-		//Оператор +=
-	Fraction& operator+=(const Fraction& other)
+		//Оператор +
+	Fraction& operator+(const Fraction& other)
 	{
 		if (this->denumerator != other.denumerator)
 		{
@@ -151,8 +151,8 @@ public:
 		toMixed();
 		return *this;
 	}
-		//Оператор -=
-	Fraction& operator-=(const Fraction& other)
+		//Оператор -
+	Fraction& operator-(const Fraction& other)
 	{
 		if (this->denumerator != other.denumerator)
 		{
@@ -167,8 +167,8 @@ public:
 		toMixed();
 		return *this;
 	}
-		//Оператор *=
-	Fraction& operator*=(const Fraction& other)
+		//Оператор *
+	Fraction& operator*(const Fraction& other)
 	{
 		this->numerator = (this->numerator + this->integer * this->denumerator) * (other.numerator + other.integer * other.denumerator);
 		this->denumerator = this->denumerator * other.denumerator;
@@ -176,8 +176,8 @@ public:
 		toMixed();
 		return *this;
 	}
-		//Оператор /=
-	Fraction& operator/=(const Fraction& other)
+		//Оператор /
+	Fraction& operator/(const Fraction& other)
 	{
 		this->numerator = (this->numerator + this->integer * this->denumerator) * other.denumerator;
 		this->denumerator = this->denumerator * (other.numerator + other.integer * other.denumerator);
