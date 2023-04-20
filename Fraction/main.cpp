@@ -227,7 +227,7 @@ void main()
 	Fraction C;
 	Fraction A(13, 8);
 	Fraction B(1, 1, 8);
-	//A *= B;
+	A * B;
 	cout << A << endl;
 	/*cin >> C;
 	cout << C << endl;
