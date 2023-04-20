@@ -135,8 +135,8 @@ public:
 	}
 
 	//              Operators:
-		//Оператор +
-	Fraction& operator+(const Fraction& other)
+		//Оператор +=
+	Fraction& operator+=(const Fraction& other)
 	{
 		if (this->denumerator != other.denumerator)
 		{
@@ -151,8 +151,8 @@ public:
 		toMixed();
 		return *this;
 	}
-		//Оператор -
-	Fraction& operator-(const Fraction& other)
+		//Оператор -=
+	Fraction& operator-=(const Fraction& other)
 	{
 		if (this->denumerator != other.denumerator)
 		{
@@ -167,8 +167,8 @@ public:
 		toMixed();
 		return *this;
 	}
-		//Оператор *
-	Fraction& operator*(const Fraction& other)
+		//Оператор *=
+	Fraction& operator*=(const Fraction& other)
 	{
 		this->numerator = (this->numerator + this->integer * this->denumerator) * (other.numerator + other.integer * other.denumerator);
 		this->denumerator = this->denumerator * other.denumerator;
@@ -176,8 +176,8 @@ public:
 		toMixed();
 		return *this;
 	}
-		//Оператор /
-	Fraction& operator/(const Fraction& other)
+		//Оператор /=
+	Fraction& operator/=(const Fraction& other)
 	{
 		this->numerator = (this->numerator + this->integer * this->denumerator) * other.denumerator;
 		this->denumerator = this->denumerator * (other.numerator + other.integer * other.denumerator);
@@ -185,7 +185,6 @@ public:
 		toMixed();
 		return *this;
 	}
-
 	//				In-out
 	friend istream& operator>>(istream& in, Fraction& name)
 	{
@@ -228,9 +227,9 @@ void main()
 	Fraction C;
 	Fraction A(13, 8);
 	Fraction B(1, 1, 8);
-	A = A / B;
+	//A *= B;
 	cout << A << endl;
-	cin >> C;
+	/*cin >> C;
 	cout << C << endl;
-	cout << C.todecimal();
+	cout << C.todecimal();*/
 }
