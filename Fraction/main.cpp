@@ -250,14 +250,14 @@ void main()
 	Fraction A(13, 7);
 	Fraction B(1, 1, 8);
 	C = A;
-	if (C <= A)
+	if (C != A)
 	{
 		cout << "its ok" << endl;
 	}
 	A /= B;
 	cout << C << endl;
 	cout << A << endl;
-	if (C >= A)
+	if (C != A)
 	{
 		cout << "its ok" << endl;
 	}
@@ -325,7 +325,7 @@ bool operator==(const Fraction Left, const Fraction Right)
 }
 bool operator!=(const Fraction Left, const Fraction Right)
 {
-	return Left.integer != Right.integer && Left.numerator != Right.numerator && Left.denumerator != Right.denumerator ? true : false;
+	return Left==Right ? false : true;
 }
 bool operator<(const Fraction Left, const Fraction Right)
 {
