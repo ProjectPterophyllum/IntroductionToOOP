@@ -261,6 +261,9 @@ void main()
 	{
 		cout << "its ok" << endl;
 	}
+
+	cout << (Fraction(1, 1, 2) == Fraction(3, 2)) << endl;
+	cout << (Fraction(1, 2) == Fraction(5, 10)) << endl;
 }
 //					Operators:
 Fraction operator+(const Fraction Left, const Fraction Right)
@@ -325,7 +328,7 @@ bool operator==(const Fraction Left, const Fraction Right)
 }
 bool operator!=(const Fraction Left, const Fraction Right)
 {
-	return Left==Right ? false : true;
+	return Left == Right ? false : true;
 }
 bool operator<(const Fraction Left, const Fraction Right)
 {
