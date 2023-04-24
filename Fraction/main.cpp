@@ -4,16 +4,16 @@ using namespace std;
 //#define DEBUG
 class Fraction;
 
-Fraction operator+(const Fraction Left, const Fraction Right);
-Fraction operator-(const Fraction Left, const Fraction Right);
-Fraction operator*(const Fraction Left, const Fraction Right);
-Fraction operator/(const Fraction Left, const Fraction Right);
-bool operator==(const Fraction Left, const Fraction Right);
-bool operator!=(const Fraction Left, const Fraction Right);
-bool operator<(const Fraction Left, const Fraction Right);
-bool operator>(const Fraction Left, const Fraction Right);
-bool operator<=(const Fraction Left, const Fraction Right);
-bool operator>=(const Fraction Left, const Fraction Right);
+Fraction operator+(Fraction Left, Fraction Right);
+Fraction operator-(Fraction Left, Fraction Right);
+Fraction operator*(Fraction Left, Fraction Right);
+Fraction operator/(const Fraction& Left, const Fraction& Right);
+bool operator==(const Fraction& Left, const Fraction& Right);
+bool operator!=(const Fraction& Left, const Fraction& Right);
+bool operator<(const Fraction& Left, const Fraction& Right);
+bool operator>(const Fraction& Left, const Fraction& Right);
+bool operator<=(const Fraction& Left, const Fraction& Right);
+bool operator>=(const Fraction& Left, const Fraction& Right);
 
 class Fraction
 {
@@ -115,69 +115,63 @@ public:
 	}
 #endif // DEBUG
 	//Упрощение дроби
-	void simplify()
+	Fraction& simplify()
 	{
 		int gcd = calculateGCD(numerator, denumerator);
 		numerator /= gcd;
 		denumerator /= gcd;
+		return *this;
 	}
 	//              Conversion Methods:
 		//Преобразование из неправильной в смешаную
-	void toMixed()
+	Fraction& toMixed()
 	{
-		if (!properFraction())
-		{
-			integer += numerator / denumerator;
-			numerator = numerator % denumerator;
-		}
+		integer += numerator / denumerator;
+		numerator = numerator % denumerator;
+		return *this;
 	}
 	//Из смешаной в неправильную
-	void toImproper()
+	Fraction& toImproper()
 	{
 		if (integer > 0)
 		{
 			numerator += integer * denumerator;
 			integer = 0;
 		}
+		return *this;
 	}
 	//В десятичную
-	double todecimal()
+	double todecimal() const
 	{
 		return (double)get_int() + ((double)get_num() / (double)get_denum());
 	}
-
+	Fraction inverted()const
+	{
+		Fraction inverted = *this;
+		inverted.toImproper();
+		inverted.numerator ^= inverted.denumerator;
+		inverted.denumerator ^= inverted.numerator;
+		inverted.numerator ^= inverted.denumerator;
+		return inverted;
+	}
 	//              Operators:
-		//Оператор +=
+	// Оператор =
+	Fraction& operator=(const Fraction& other)
+	{
+		this->integer = other.integer;
+		this->numerator = other.numerator;
+		this->denumerator = other.denumerator;
+		return *this;
+	}
+	//Оператор +=
 	Fraction& operator+=(const Fraction& other)
 	{
-		if (this->denumerator != other.denumerator)
-		{
-			int lcm = calculateLCM(this->denumerator, other.denumerator);
-			this->numerator = (this->numerator * lcm / this->denumerator) + (other.numerator * lcm / other.denumerator);
-			this->denumerator = (this->denumerator * lcm / this->denumerator);
-		}
-		else
-			this->numerator += other.numerator;
-		this->integer += other.integer;
-		simplify();
-		toMixed();
-		return *this;
+		return *this = *this + other;
 	}
 	//Оператор -=
 	Fraction& operator-=(const Fraction& other)
 	{
-		if (this->denumerator != other.denumerator)
-		{
-			int lcm = calculateLCM(this->denumerator, other.denumerator);
-			this->numerator = (this->numerator * lcm / this->denumerator) - (other.numerator * lcm / other.denumerator);
-			this->denumerator = (this->denumerator * lcm / this->denumerator);
-		}
-		else
-			this->numerator -= other.numerator;
-		this->integer -= other.integer;
-		simplify();
-		toMixed();
-		return *this;
+		return *this = *this - other;
 	}
 	//Оператор *=
 	Fraction& operator*=(const Fraction& other)
@@ -197,16 +191,6 @@ public:
 		toMixed();
 		return *this;
 	}
-	friend Fraction operator+(const Fraction Left, const Fraction Right);
-	friend Fraction operator-(const Fraction Left, const Fraction Right);
-	friend Fraction operator*(const Fraction Left, const Fraction Right);
-	friend Fraction operator/(const Fraction Left, const Fraction Right);
-	friend bool operator==(const Fraction Left, const Fraction Right);
-	friend bool operator!=(const Fraction Left, const Fraction Right);
-	friend bool operator<(const Fraction Left, const Fraction Right);
-	friend bool operator>(const Fraction Left, const Fraction Right);
-	friend bool operator<=(const Fraction Left, const Fraction Right);
-	friend bool operator>=(const Fraction Left, const Fraction Right);
 	//				In-out
 	friend istream& operator>>(istream& in, Fraction& name)
 	{
@@ -250,99 +234,67 @@ void main()
 	Fraction A(13, 7);
 	Fraction B(1, 1, 8);
 	C = A;
-	if (C != A)
-	{
-		cout << "its ok" << endl;
-	}
 	A /= B;
 	cout << C << endl;
 	cout << A << endl;
-	if (C != A)
-	{
-		cout << "its ok" << endl;
-	}
-
 	cout << (Fraction(1, 1, 2) == Fraction(3, 2)) << endl;
-	cout << (Fraction(1, 2) == Fraction(5, 10)) << endl;
+	cout << (Fraction(1, 3) > Fraction(5, 10)) << endl;
 }
 //					Operators:
-Fraction operator+(const Fraction Left, const Fraction Right)
+Fraction operator+(Fraction Left, Fraction Right)
 {
-	Fraction Result;
-	if (Left.denumerator != Right.denumerator)
-	{
-		int lcm = Result.calculateLCM(Left.denumerator, Right.denumerator);
-		Result.numerator = (Left.numerator * lcm / Left.denumerator) + (Right.numerator * lcm / Right.denumerator);
-		Result.denumerator = (Left.denumerator * lcm / Left.denumerator);
-	}
-	else
-	{
-		Result.denumerator = Left.denumerator;
-		Result.numerator = Left.numerator + Right.numerator;
-		Result.integer = Left.integer + Right.integer;
-	}
-	Result.simplify();
-	Result.toMixed();
-	return Result;
+	Left.toImproper();
+	Right.toImproper();
+	return Fraction
+	(
+		(Left.get_num() * Right.get_denum()) + (Right.get_num() * Left.get_denum()),
+		Left.get_denum() * Right.get_denum()
+	).simplify().toMixed();
 }
-Fraction operator-(const Fraction Left, const Fraction Right)
+Fraction operator-(Fraction Left, Fraction Right)
 {
-	Fraction Result;
-	if (Left.denumerator != Right.denumerator)
-	{
-		int lcm = Result.calculateLCM(Left.denumerator, Right.denumerator);
-		Result.numerator = (Left.numerator * lcm / Left.denumerator) - (Right.numerator * lcm / Right.denumerator);
-		Result.denumerator = (Left.denumerator * lcm / Left.denumerator);
-	}
-	else
-	{
-		Result.denumerator = Left.denumerator;
-		Result.numerator = Left.numerator - Right.numerator;
-		Result.integer = Left.integer - Right.integer;
-	}
-	Result.simplify();
-	Result.toMixed();
-	return Result;
+	Left.toImproper();
+	Right.toImproper();
+	return Fraction
+	(
+		(Left.get_num() * Right.get_denum()) - (Right.get_num() * Left.get_denum()),
+		Left.get_denum() * Right.get_denum()
+	).simplify().toMixed();
 }
-Fraction operator*(const Fraction Left, const Fraction Right)
+Fraction operator*(Fraction Left, Fraction Right)
 {
-	Fraction Result;
-	Result.numerator = (Left.numerator + Left.integer * Left.denumerator) * (Right.numerator + Right.integer * Right.denumerator);
-	Result.denumerator = Left.denumerator * Right.denumerator;
-	Result.simplify();
-	Result.toMixed();
-	return Result;
+	Left.toImproper();
+	Right.toImproper();
+	return Fraction
+	(
+		Left.get_num() * Right.get_num(), Left.get_denum() * Right.get_denum()
+	).simplify().toMixed();
 }
-Fraction operator/(const Fraction Left, const Fraction Right)
+Fraction operator/(const Fraction& Left, const Fraction& Right)
 {
-	Fraction Result;
-	Result.numerator = (Left.numerator + Left.integer * Left.denumerator) * Right.denumerator;
-	Result.denumerator = (Right.numerator + Right.integer * Right.denumerator) * Left.denumerator;
-	Result.simplify();
-	Result.toMixed();
-	return Result;
+	return Left * Right.inverted();
 }
-bool operator==(const Fraction Left, const Fraction Right)
+bool operator==(const Fraction& Left, const Fraction& Right)
 {
-	return Left.integer == Right.integer && Left.numerator == Right.numerator && Left.denumerator == Right.denumerator ? true : false;
+	return Left.todecimal() == Right.todecimal() ? true : false;
 }
-bool operator!=(const Fraction Left, const Fraction Right)
+bool operator!=(const Fraction& Left, const Fraction& Right)
 {
 	return Left == Right ? false : true;
 }
-bool operator<(const Fraction Left, const Fraction Right)
+bool operator<(const Fraction& Left, const Fraction& Right)
 {
-	return ((Left.numerator + Left.integer * Left.denumerator) * Right.denumerator) < ((Right.numerator + Right.integer * Right.denumerator) * Left.denumerator) ? true : false;
+	return Left.todecimal() < Right.todecimal() ? true : false;
 }
-bool operator>(const Fraction Left, const Fraction Right)
+bool operator>(const Fraction& Left, const Fraction& Right)
 {
-	return ((Left.numerator + Left.integer * Left.denumerator) * Right.denumerator) > ((Right.numerator + Right.integer * Right.denumerator) * Left.denumerator) ? true : false;
+	return Left < Right ? false : true;
 }
-bool operator<=(const Fraction Left, const Fraction Right)
+bool operator<=(const Fraction& Left, const Fraction& Right)
 {
 	return Left < Right || Left == Right ? true : false;
 }
-bool operator>=(const Fraction Left, const Fraction Right)
+bool operator>=(const Fraction& Left, const Fraction& Right)
 {
 	return Left > Right || Left == Right ? true : false;
 }
