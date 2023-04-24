@@ -155,7 +155,7 @@ public:
 		return inverted;
 	}
 	//              Operators:
-	// Оператор =
+	//Оператор =
 	Fraction& operator=(const Fraction& other)
 	{
 		this->integer = other.integer;
