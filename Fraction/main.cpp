@@ -2,18 +2,27 @@
 using namespace std;
 
 //#define DEBUG
+#define Test
+#define tab "\t"
+#define delimiter cout << "|----------------------------------------------------------------------------------------------------|" << endl;
+//Объявление класса
 class Fraction;
-
+//Объявление перегруженных операторов
 Fraction operator+(Fraction Left, Fraction Right);
 Fraction operator-(Fraction Left, Fraction Right);
 Fraction operator*(Fraction Left, Fraction Right);
 Fraction operator/(const Fraction& Left, const Fraction& Right);
 bool operator==(const Fraction& Left, const Fraction& Right);
+bool operator==(const double Left, const Fraction& Right);
 bool operator!=(const Fraction& Left, const Fraction& Right);
 bool operator<(const Fraction& Left, const Fraction& Right);
 bool operator>(const Fraction& Left, const Fraction& Right);
 bool operator<=(const Fraction& Left, const Fraction& Right);
 bool operator>=(const Fraction& Left, const Fraction& Right);
+//Объявления функций тестирования
+void Test_Calculation_Operators(const Fraction& Left, const Fraction& Right);
+void Test_Comparision_Operators(const Fraction& Left, const Fraction& Right);
+void Test_Increment_Decrement_Operators(Fraction name);
 
 class Fraction
 {
@@ -73,6 +82,12 @@ public:
 #ifdef DEBUG
 		cout << "Integer + Num / Denum constructor was used" << endl;
 #endif // DEBUG
+	}
+	Fraction(double value)
+	{
+		denumerator = 10;
+		integer = (int)((value * 10) / denumerator);
+		numerator = (int)(value * 10) % denumerator;
 	}
 	//Конструктор копирования
 	Fraction(const Fraction& other)
@@ -191,6 +206,32 @@ public:
 		toMixed();
 		return *this;
 	}
+	Fraction& operator++()
+	{
+		toMixed();
+		integer++;
+		return *this;
+	}
+	Fraction operator++(int)
+	{
+		toMixed();
+		Fraction old = *this;
+		integer++;
+		return old;
+	}
+	Fraction& operator--()
+	{
+		toMixed();
+		integer--;
+		return *this;
+	}
+	Fraction operator--(int)
+	{
+		toMixed();
+		Fraction old = *this;
+		integer--;
+		return old;
+	}
 	//				In-out
 	friend istream& operator>>(istream& in, Fraction& name)
 	{
@@ -209,12 +250,13 @@ public:
 	}
 private:
 	//Проверяет правильная дробь или неправильная
-	bool properFraction()const
+	bool ifProper()const
 	{
 		return numerator < denumerator ? true : false;
 	}
 	//НОД
-	int calculateGCD(const int num, const int denum)const {
+	int calculateGCD(const int num, const int denum)const
+	{
 		if (denum == 0) {
 			return num;
 		}
@@ -230,15 +272,20 @@ private:
 void main()
 {
 	setlocale(LC_ALL, "");
-	Fraction C;
-	Fraction A(13, 7);
+	Fraction A(2, 5, 7);
 	Fraction B(1, 1, 8);
-	C = A;
-	A /= B;
-	cout << C << endl;
-	cout << A << endl;
-	cout << (Fraction(1, 1, 2) == Fraction(3, 2)) << endl;
-	cout << (Fraction(1, 3) > Fraction(5, 10)) << endl;
+	Fraction C(10, 40);
+	Fraction F(3.434);
+	cout << F << endl;
+#ifdef Test
+	delimiter;
+	Test_Calculation_Operators(A, C);
+	delimiter;
+	Test_Comparision_Operators(A, C);
+	delimiter;
+	Test_Increment_Decrement_Operators(A);
+	delimiter;
+#endif // Test
 }
 //					Operators:
 Fraction operator+(Fraction Left, Fraction Right)
@@ -276,7 +323,11 @@ Fraction operator/(const Fraction& Left, const Fraction& Right)
 }
 bool operator==(const Fraction& Left, const Fraction& Right)
 {
-	return Left.todecimal() == Right.todecimal() ? true : false;
+	return (int)(Left.todecimal() * 10000) == (int)(Right.todecimal() * 10000) ? true : false;
+}
+bool operator==(const double Left, const Fraction& Right)
+{
+	return (int)(Left * 10000) == (int)(Right.todecimal() * 10000) ? true : false;
 }
 bool operator!=(const Fraction& Left, const Fraction& Right)
 {
@@ -297,4 +348,31 @@ bool operator<=(const Fraction& Left, const Fraction& Right)
 bool operator>=(const Fraction& Left, const Fraction& Right)
 {
 	return Left > Right || Left == Right ? true : false;
+}
+//Реализация функций тестирования
+void Test_Calculation_Operators(const Fraction& Left, const Fraction& Right)
+{
+	cout << "Левый операнд: " << Left << tab << "Правый операнд: " << Right << endl;
+	cout << "Оператор +: \t Результат: " << Left + Right << "\t" << (Left.todecimal() + Right.todecimal() == Left + Right ? " Correct " : " Wrong ") << endl;
+	cout << "Оператор -: \t Результат: " << Left - Right << "\t" << (Left.todecimal() - Right.todecimal() == Left - Right ? " Correct " : " Wrong ") << endl;
+	cout << "Оператор *: \t Результат: " << Left * Right << "\t" << (Left.todecimal() * Right.todecimal() == Left * Right ? " Correct " : " Wrong ") << endl;
+	cout << "Оператор /: \t Результат: " << Left - Right << "\t" << (Left.todecimal() / Right.todecimal() == Left / Right ? " Correct " : " Wrong ") << endl;
+}
+void Test_Comparision_Operators(const Fraction& Left, const Fraction& Right)
+{
+	cout << "Левый операнд: " << Left << tab << "Правый операнд: " << Right << endl;
+	cout << "Оператор ==: \t Результат: " << (Left == Right ? "Yes" : "No") << endl;
+	cout << "Оператор !=: \t Результат: " << (Left != Right ? "Yes" : "No") << endl;
+	cout << "Оператор <: \t Результат: " << (Left < Right ? "Yes" : "No") << endl;
+	cout << "Оператор >: \t Результат: " << (Left > Right ? "Yes" : "No") << endl;
+	cout << "Оператор <=: \t Результат: " << (Left <= Right ? "Yes" : "No") << endl;
+	cout << "Оператор >=: \t Результат: " << (Left >= Right ? "Yes" : "No") << endl;
+}
+void Test_Increment_Decrement_Operators(Fraction name)
+{
+	cout << "Начальное значение: " << name << endl;
+	cout << "Increment++: " << name++ << tab << " > " << name << endl;
+	cout << "++Increment: " << ++name << endl;
+	cout << "Decrement--: " << name-- << tab << " > " << name << endl;
+	cout << "--Decrement: " << --name << endl;
 }
