@@ -88,6 +88,9 @@ public:
 		denumerator = 10;
 		integer = (int)((value * 10) / denumerator);
 		numerator = (int)(value * 10) % denumerator;
+#ifdef DEBUG
+		cout << "DecimalConstructor was used\t" << this << endl;
+#endif // DEBUG
 	}
 	//Конструктор копирования
 	Fraction(const Fraction& other)
