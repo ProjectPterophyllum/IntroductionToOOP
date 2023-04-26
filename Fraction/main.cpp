@@ -83,11 +83,11 @@ public:
 		cout << "Integer + Num / Denum constructor was used" << endl;
 #endif // DEBUG
 	}
-	Fraction(double value)
+	Fraction(double value, int precision=10)
 	{
-		denumerator = 10;
-		integer = (int)((value * 10) / denumerator);
-		numerator = (int)(value * 10) % denumerator;
+		denumerator = precision;
+		integer = (int)((value * denumerator) / denumerator);
+		numerator = (int)(value * denumerator) % denumerator;
 #ifdef DEBUG
 		cout << "DecimalConstructor was used\t" << this << endl;
 #endif // DEBUG
