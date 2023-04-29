@@ -359,7 +359,7 @@ void Test_Calculation_Operators(const Fraction& Left, const Fraction& Right)
 	cout << "Оператор +: \t Результат: " << Left + Right << "\t" << (Left.todecimal() + Right.todecimal() == Left + Right ? " Correct " : " Wrong ") << endl;
 	cout << "Оператор -: \t Результат: " << Left - Right << "\t" << (Left.todecimal() - Right.todecimal() == Left - Right ? " Correct " : " Wrong ") << endl;
 	cout << "Оператор *: \t Результат: " << Left * Right << "\t" << (Left.todecimal() * Right.todecimal() == Left * Right ? " Correct " : " Wrong ") << endl;
-	cout << "Оператор /: \t Результат: " << Left - Right << "\t" << (Left.todecimal() / Right.todecimal() == Left / Right ? " Correct " : " Wrong ") << endl;
+	cout << "Оператор /: \t Результат: " << Left / Right << "\t" << (Left.todecimal() / Right.todecimal() == Left / Right ? " Correct " : " Wrong ") << endl;
 }
 void Test_Comparision_Operators(const Fraction& Left, const Fraction& Right)
 {
