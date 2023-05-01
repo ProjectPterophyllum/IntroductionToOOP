@@ -23,7 +23,7 @@ bool operator>=(const Fraction& Left, const Fraction& Right);
 void Test_Calculation_Operators(const Fraction& Left, const Fraction& Right);
 void Test_Comparision_Operators(const Fraction& Left, const Fraction& Right);
 void Test_Increment_Decrement_Operators(Fraction name);
-
+void Test_Assignment_Operators(const Fraction& name);
 class Fraction
 {
 private:
@@ -83,7 +83,7 @@ public:
 		cout << "Integer + Num / Denum constructor was used" << endl;
 #endif // DEBUG
 	}
-	Fraction(double value, int precision=10)
+	Fraction(double value, int precision = 10)
 	{
 		denumerator = precision;
 		integer = (int)((value * denumerator) / denumerator);
@@ -288,6 +288,8 @@ void main()
 	delimiter;
 	Test_Increment_Decrement_Operators(A);
 	delimiter;
+	Test_Assignment_Operators(A);
+	delimiter;
 #endif // Test
 }
 //					Operators:
@@ -378,4 +380,19 @@ void Test_Increment_Decrement_Operators(Fraction name)
 	cout << "++Increment: " << ++name << endl;
 	cout << "Decrement--: " << name-- << tab << " > " << name << endl;
 	cout << "--Decrement: " << --name << endl;
+}
+void Test_Assignment_Operators(const Fraction& name)
+{
+	cout << "Операнд: " << name << endl;
+	Fraction Result;
+	Result = name;
+	cout << "Оператор = : " << Result << endl;
+	Result += name;
+	cout << "Оператор += : " << Result << endl;
+	Result -= name;
+	cout << "Оператор -= : " << Result << endl;
+	Result *= name;
+	cout << "Оператор *= : " << Result << endl;
+	Result /= name;
+	cout << "Оператор /= : " << Result << endl;
 }
