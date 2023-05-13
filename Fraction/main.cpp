@@ -2,7 +2,7 @@
 using namespace std;
 
 #define DEBUG
-//#define Test
+#define Test
 #define tab "\t"
 #define delimiter cout << "|----------------------------------------------------------------------------------------------------|" << endl;
 //Объявление класса
@@ -291,7 +291,6 @@ void main()
 	Test_Assignment_Operators(A);
 	delimiter;
 #endif // Test
-	cout << (A == B) << endl;
 }
 //					Operators:
 Fraction operator+(Fraction Left, Fraction Right)
