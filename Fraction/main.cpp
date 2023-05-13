@@ -1,8 +1,9 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
 using namespace std;
 
 #define DEBUG
-#define Test
+//#define Test
 #define tab "\t"
 #define delimiter cout << "|----------------------------------------------------------------------------------------------------|" << endl;
 //Объявление класса
@@ -173,6 +174,13 @@ public:
 		return inverted;
 	}
 	//              Operators:
+	Fraction& operator()(int integer, int numerator, int denumerator)
+	{
+		set_int(integer);
+		set_num(numerator);
+		set_denum(denumerator);
+		return *this;
+	}
 	//Оператор =
 	Fraction& operator=(const Fraction& other)
 	{
@@ -238,15 +246,36 @@ public:
 	//				In-out
 	friend istream& operator>>(istream& in, Fraction& name)
 	{
-		char slash = '/';
+		/*char slash = '/';
 		char space = '|';
 		in >> name.integer >> space >> name.numerator >> slash >> name.denumerator;
+		return in;*/
+		const int size = 256;
+		char buffer[size] = {};
+		int number[3] = {};
+		in.getline(buffer, size);
+		int n = 0; //Количество введенных чисел
+		char delimiters[] = "() /";
+		for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+		{
+			number[n++] = atoi(pch);
+		}
+		name = Fraction();
+		switch (n)
+		{
+		case 1: name.set_int(number[0]); break;
+		case 2: name.set_num(number[0]); name.set_denum(number[1]); break;
+		case 3: name(number[0], number[1], number[2]); break;
+		}
 		return in;
 	}
 	friend ostream& operator<<(ostream& out, const Fraction& name)
 	{
 		if (name.integer != 0)
-			out << name.integer << "|" << name.numerator << "/" << name.denumerator;
+			if (name.numerator != 0)
+				out << name.integer << "|" << name.numerator << "/" << name.denumerator;
+			else
+				out << name.integer;
 		else
 			out << name.numerator << "/" << name.denumerator;
 		return out;
@@ -274,13 +303,13 @@ private:
 };
 void main()
 {
+#ifdef Test
 	setlocale(LC_ALL, "");
 	Fraction A(2, 5, 7);
 	Fraction B(1, 1, 8);
 	Fraction C(10, 40);
 	Fraction F(3.434);
 	cout << F << endl;
-#ifdef Test
 	delimiter;
 	Test_Calculation_Operators(A, C);
 	delimiter;
@@ -291,6 +320,7 @@ void main()
 	Test_Assignment_Operators(A);
 	delimiter;
 #endif // Test
+
 }
 //					Operators:
 Fraction operator+(Fraction Left, Fraction Right)
