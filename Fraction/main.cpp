@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+using std::cout;
 #define DEBUG
 //#define Test
 #define tab "\t"
@@ -120,6 +121,17 @@ public:
 #endif // DEBUG
 	}
 
+	//				Type-cast operators:
+	operator int()
+	{
+		toMixed();
+		return integer;
+	}
+	operator double()
+	{
+		toImproper();
+		return double(numerator) / denumerator;
+	}
 	//              Method:
 #ifdef DEBUG
 	void Print() const
@@ -329,7 +341,8 @@ void main()
 	Test_Assignment_Operators(A);
 	delimiter;
 #endif // Test
-
+	Fraction A = 2.75;
+	cout << A << endl;
 }
 //					Operators:
 Fraction operator+(Fraction Left, Fraction Right)
