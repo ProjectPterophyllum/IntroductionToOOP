@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 using namespace std;
 
-//#define DEBUG
+#define DEBUG
 #define Test
 #define tab "\t"
 #define delimiter cout << "|----------------------------------------------------------------------------------------------------|" << endl;
@@ -126,7 +126,7 @@ public:
 		string result;
 		if (integer > 0)
 			return result = "Дробь смешанная";
-		else if (properFraction())
+		else if (ifProper())
 			return result = "Дробь правильная";
 		else
 			return result = "Дробь неправильная";
@@ -291,6 +291,7 @@ void main()
 	Test_Assignment_Operators(A);
 	delimiter;
 #endif // Test
+
 }
 //					Operators:
 Fraction operator+(Fraction Left, Fraction Right)
