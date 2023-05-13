@@ -66,7 +66,7 @@ public:
 		numerator = 0;
 		denumerator = 1;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
