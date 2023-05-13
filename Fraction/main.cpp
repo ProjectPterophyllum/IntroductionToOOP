@@ -66,6 +66,15 @@ public:
 		numerator = 0;
 		denumerator = 1;
 	}
+	Fraction(int integer)
+	{
+		this->integer = integer;
+		this->numerator = 0;
+		set_denum(denumerator);
+#ifdef DEBUG
+		cout << "1ArgConstructor";
+#endif // DEBUG
+	}
 	Fraction(int numerator, int denumerator)
 	{
 		integer = 0;
