@@ -3,7 +3,7 @@
 using namespace std;
 
 using std::cout;
-#define DEBUG
+//#define DEBUG
 //#define Test
 #define tab "\t"
 #define delimiter cout << "|----------------------------------------------------------------------------------------------------|" << endl;
