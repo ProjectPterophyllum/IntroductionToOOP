@@ -7,6 +7,7 @@ using std::cout;
 //#define Test
 #define tab "\t"
 #define delimiter cout << "|----------------------------------------------------------------------------------------------------|" << endl;
+#define HOME_WORK1
 //Объявление класса
 class Fraction;
 //Объявление перегруженных операторов
@@ -341,8 +342,12 @@ void main()
 	Test_Assignment_Operators(A);
 	delimiter;
 #endif // Test
+	
+#ifdef HOME_WORK1
 	Fraction A = 2.75;
 	cout << A << endl;
+#endif // HOME_WORK1
+
 }
 //					Operators:
 Fraction operator+(Fraction Left, Fraction Right)
@@ -380,15 +385,15 @@ Fraction operator/(const Fraction& Left, const Fraction& Right)
 }
 bool operator==(const Fraction& Left, const Fraction& Right)
 {
-	return (int)(Left.todecimal() * 10000) == (int)(Right.todecimal() * 10000) ? true : false;
+	return (int)(Left.todecimal() * 10000) == (int)(Right.todecimal() * 10000);
 }
 bool operator==(const double Left, const Fraction& Right)
 {
-	return (int)(Left * 10000) == (int)(Right.todecimal() * 10000) ? true : false;
+	return (int)(Left * 10000) == (int)(Right.todecimal() * 10000);
 }
 bool operator!=(const Fraction& Left, const Fraction& Right)
 {
-	return Left == Right ? false : true;
+	return !(Left == Right);
 }
 bool operator<(const Fraction& Left, const Fraction& Right)
 {
@@ -396,15 +401,15 @@ bool operator<(const Fraction& Left, const Fraction& Right)
 }
 bool operator>(const Fraction& Left, const Fraction& Right)
 {
-	return Left < Right ? false : true;
+	return !(Left < Right);
 }
 bool operator<=(const Fraction& Left, const Fraction& Right)
 {
-	return Left < Right || Left == Right ? true : false;
+	return Left < Right || Left == Right;
 }
 bool operator>=(const Fraction& Left, const Fraction& Right)
 {
-	return Left > Right || Left == Right ? true : false;
+	return Left > Right || Left == Right;
 }
 //Реализация функций тестирования
 void Test_Calculation_Operators(const Fraction& Left, const Fraction& Right)
