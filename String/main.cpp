@@ -89,8 +89,8 @@ public:
 
 String operator+(const String& Left, const String& Right)
 {
-	int lefts = StrLenght(Left.get_str());
-	int rights = StrLenght(Right.get_str());
+	int lefts = StrLenght(Left.str);
+	int rights = StrLenght(Right.str);
 	int tmps = lefts + rights + 1;
 	String TMP(tmps);
 	for (int i = 0, j = lefts; i < lefts; i++, j++)
