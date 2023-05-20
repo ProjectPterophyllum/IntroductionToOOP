@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 using namespace std;
 #define HOME_WORK
+//#define DEBUG
 //Функция подсчета длинны строки
 int StrLenght(const char* str);
 //Объявление класса
@@ -23,47 +24,43 @@ public:
 	{
 		return str;
 	}
-	void set_size(int size)
-	{
-		this->size = size;
-	}
-	void set_str(char* str)
-	{
-		this->str = str;
-	}
 	//			Constructors
 	String(int size = 80)
 	{
 		this->size = size;
 		this->str = new char[size] {};
+#ifdef DEBUG
 		cout << "Constructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	String(const char string[])
 	{
 		this->size = StrLenght(string) + 1;
 		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-		{
-			str[i] = string[i];
-		}
+		for (int i = 0; i < size; i++) str[i] = string[i];
+#ifdef DEBUG
 		cout << "Constructor:\t" << this << endl;
+#endif // DEBUG
 	}
 	String(const String& other)
 	{
-		delete[] this->str;
 		this->size = other.size;
 		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-		{
-			str[i] = other.str[i];
-		}
+		for (int i = 0; i < size; i++) str[i] = other.str[i];
+#ifdef DEBUG
 		cout << "Copy Constructor: \t" << this << endl;
+#endif // DEBUG
+
 	}
 	//			Destructor
 	~String()
 	{
 		delete[] this->str;
+#ifdef DEBUG
 		cout << "Destructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	//			Methods
 	void print()const
@@ -74,13 +71,11 @@ public:
 	//			Operators
 	String& operator=(const String& other)
 	{
+		if (this->str == other.str) return *this;
 		delete[] this->str;
 		this->size = other.size;
 		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-		{
-			str[i] = other.str[i];
-		}
+		for (int i = 0; i < size; i++) str[i] = other.str[i];
 		return *this;
 	}
 	friend String operator+(const String& Left, const String& Right);
@@ -93,11 +88,8 @@ String operator+(const String& Left, const String& Right)
 	int rights = StrLenght(Right.str);
 	int tmps = lefts + rights + 1;
 	String TMP(tmps);
-	for (int i = 0, j = lefts; i < lefts; i++, j++)
-	{
-		TMP.str[i] = Left.str[i];
-		TMP.str[j] = Right.str[i];
-	}
+	for (int i = 0; i < lefts; i++) TMP.str[i] = Left.str[i];
+	for (int i = 0, j = lefts; i < rights; i++, j++) TMP.str[j] = Right.str[i];
 	TMP.str[lefts + rights] = '\0';
 	return TMP;
 };
@@ -116,6 +108,7 @@ void main()
 	//str1.print();
 #ifdef HOME_WORK
 	String str1 = "Hello";
+	str1 = str1;
 	cout << str1 << endl;
 	String str2 = "World";
 	cout << str2 << endl;
@@ -127,9 +120,6 @@ void main()
 int StrLenght(const char* str)
 {
 	int size = 0;
-	while (str[size] != '\0')
-	{
-		size++;
-	}
+	while (str[size] != '\0') size++;
 	return size;
 }
