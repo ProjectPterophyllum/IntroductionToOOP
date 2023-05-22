@@ -10,7 +10,7 @@ class Matrix
 	int** mtr;
 public:
 	//				Constructors:
-	Matrix(int r = 5, int c = 5)
+	explicit Matrix(int r = 5, int c = 5)
 	{
 		this->ROWS = r;
 		this->COLS = c;
