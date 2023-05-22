@@ -1,9 +1,7 @@
 ﻿#include <iostream>
 using namespace std;
 #define HOME_WORK
-//#define DEBUG
-//Функция подсчета длинны строки
-int StrLenght(const char* str);
+#define DEBUG
 //Объявление класса
 class String;
 //Объявление операторов
@@ -24,8 +22,12 @@ public:
 	{
 		return str;
 	}
+	char* get_str()
+	{
+		return str;
+	}
 	//			Constructors
-	String(int size = 80)
+	explicit String(int size = 80)
 	{
 		this->size = size;
 		this->str = new char[size] {};
@@ -36,7 +38,7 @@ public:
 	}
 	String(const char string[])
 	{
-		this->size = StrLenght(string) + 1;
+		this->size = (int)strlen(string) + 1;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++) str[i] = string[i];
 #ifdef DEBUG
@@ -49,9 +51,17 @@ public:
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++) str[i] = other.str[i];
 #ifdef DEBUG
-		cout << "Copy Constructor: \t" << this << endl;
+		cout << "CopyConstructor:" << this << endl;
 #endif // DEBUG
 
+	}
+	String(String&& other) noexcept
+	{
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveConstructor:\t" << this << endl;
 	}
 	//			Destructor
 	~String()
@@ -76,50 +86,62 @@ public:
 		this->size = other.size;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++) str[i] = other.str[i];
+		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
-	friend String operator+(const String& Left, const String& Right);
+	String& operator=(String&& other) noexcept
+	{
+		if (this->str == other.str) return *this;
+		delete[]this->str;
+		size = other.size;
+		str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t" << this << endl;
+		return *this;
+	}
+	String& operator+=(const String& other)
+	{
+		return *this = *this + other;
+	}
+	char& operator[](int index)const
+	{
+		return str[index];
+	}
 };
 //			Operators:
 
 String operator+(const String& Left, const String& Right)
 {
-	int lefts = StrLenght(Left.str);
-	int rights = StrLenght(Right.str);
-	int tmps = lefts + rights + 1;
+	int lefts = Left.get_size() - 1;
+	int rights = Left.get_size() + 1;
+	int tmps = lefts + rights;
 	String TMP(tmps);
-	for (int i = 0; i < lefts; i++) TMP.str[i] = Left.str[i];
-	for (int i = 0, j = lefts; i < rights; i++, j++) TMP.str[j] = Right.str[i];
-	TMP.str[lefts + rights] = '\0';
+	for (int i = 0; i < lefts; i++) TMP[i] = Left[i];
+	for (int i = 0, j = lefts; i < rights; i++, j++) TMP[j] = Right[i];
 	return TMP;
 };
 
 //				OUT
 std::ostream& operator<<(ostream& out, const String& name)
 {
-	out << name.get_str();
-	return out;
+	return out << name.get_str();
 }
 void main()
 {
 	setlocale(LC_ALL, "");
-	//cout << "Hello String" << endl;
-	//String str1;
-	//str1.print();
+	cout << "Hello String" << endl;
+	String str7;
+	str7.print();
 #ifdef HOME_WORK
 	String str1 = "Hello";
 	str1 = str1;
 	cout << str1 << endl;
 	String str2 = "World";
 	cout << str2 << endl;
-	String str3 = str1 + str2;
+	String str3 = str1;
 	cout << str3 << endl;
+	str1 += str2;
+	cout << str1 << endl;
 #endif // HOME_WORK
-}
-
-int StrLenght(const char* str)
-{
-	int size = 0;
-	while (str[size] != '\0') size++;
-	return size;
 }
