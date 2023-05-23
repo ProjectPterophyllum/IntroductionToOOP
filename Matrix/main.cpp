@@ -2,7 +2,7 @@
 using namespace std;
 #define DEBUG
 class Matrix;
-Matrix& operator+(const Matrix& Left, const Matrix& Right);
+Matrix operator+(const Matrix& Left, const Matrix& Right);
 class Matrix
 {
 	int ROWS;
@@ -104,7 +104,7 @@ void main()
 	B.FillRandom(1, 25);
 	B.Print();
 }
-Matrix& operator+(const Matrix& Left, const Matrix& Right)
+Matrix operator+(const Matrix& Left, const Matrix& Right)
 {
 	Matrix tmp;
 	if (Left.get_rows() == Right.get_rows() && Left.get_cols() == Right.get_cols())
