@@ -34,14 +34,14 @@ public:
 #endif // DEBUG
 
 	}
-	String(const char string[]) :size((int)strlen(string) + 1), str(new char[size] {})
+	String(const char string[]) :String(strlen(string)+1)
 	{
 		for (int i = 0; i < size; i++) str[i] = string[i];
 #ifdef DEBUG
 		cout << "Constructor:\t" << this << endl;
 #endif // DEBUG
 	}
-	String(const String& other) :size(other.size), str(new char[size] {})
+	String(const String& other) :String(other.str)
 	{
 		for (int i = 0; i < size; i++) str[i] = other.str[i];
 #ifdef DEBUG
