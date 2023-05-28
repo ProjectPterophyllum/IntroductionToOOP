@@ -27,38 +27,31 @@ public:
 		return str;
 	}
 	//			Constructors
-	explicit String(int size = 80)
+	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
 #ifdef DEBUG
 		cout << "Constructor:\t" << this << endl;
 #endif // DEBUG
 
 	}
-	String(const char string[])
+	String(const char string[]) :size((int)strlen(string) + 1), str(new char[size] {})
 	{
-		this->size = (int)strlen(string) + 1;
-		this->str = new char[size] {};
 		for (int i = 0; i < size; i++) str[i] = string[i];
 #ifdef DEBUG
 		cout << "Constructor:\t" << this << endl;
 #endif // DEBUG
 	}
-	String(const String& other)
+	String(const String& other) :size(other.size), str(new char[size] {})
 	{
-		this->size = other.size;
-		this->str = new char[size] {};
 		for (int i = 0; i < size; i++) str[i] = other.str[i];
 #ifdef DEBUG
 		cout << "CopyConstructor:" << this << endl;
 #endif // DEBUG
 
 	}
-	String(String&& other) noexcept
+	String(String&& other)noexcept :size(other.size), str(other.str)
 	{
-		this->size = other.size;
-		this->str = other.str;
+		//Shallow Copy
 		other.size = 0;
 		other.str = nullptr;
 		cout << "MoveConstructor:\t" << this << endl;
@@ -104,7 +97,11 @@ public:
 	{
 		return *this = *this + other;
 	}
-	char& operator[](int index)const
+	char operator[](int index) const
+	{
+		return str[index];
+	}
+	char& operator[](int index)
 	{
 		return str[index];
 	}
